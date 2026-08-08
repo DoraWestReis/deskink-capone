@@ -1,0 +1,78 @@
+{
+  "name": "Client",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "ID \u00fanico do cliente (gerado automaticamente)"
+    },
+    "codigo_sequencial": {
+      "type": "number",
+      "description": "C\u00f3digo sequencial do cliente (1, 2, 3...)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nome completo do cliente"
+    },
+    "whatsapp": {
+      "type": "string",
+      "description": "N\u00famero do WhatsApp"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email do cliente"
+    },
+    "cpf": {
+      "type": "string",
+      "description": "CPF do cliente"
+    },
+    "birth_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de nascimento"
+    },
+    "registration_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de cadastro do cliente"
+    },
+    "city": {
+      "type": "string",
+      "description": "Cidade do cliente"
+    },
+    "lead_origin": {
+      "type": "string",
+      "enum": [
+        "Indica\u00e7\u00e3o",
+        "Instagram",
+        "TikTok",
+        "Google",
+        "Repasse Studio",
+        "Network",
+        "Tr\u00e1fego",
+        "Outros"
+      ],
+      "description": "Origem do lead"
+    },
+    "referred_by": {
+      "type": "string",
+      "description": "ID do cliente que indicou"
+    },
+    "profile_image": {
+      "type": "string",
+      "description": "URL da foto do cliente"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es gerais"
+    },
+    "total_spent_history": {
+      "type": "number",
+      "description": "Hist\u00f3rico total gasto pelo cliente (LTV)"
+    }
+  },
+  "required": [
+    "name",
+    "whatsapp"
+  ]
+}

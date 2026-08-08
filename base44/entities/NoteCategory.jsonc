@@ -1,0 +1,23 @@
+{
+  "name": "NoteCategory",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome da categoria"
+    },
+    "color": {
+      "type": "string",
+      "description": "Cor de fundo do badge (hex)",
+      "default": "#E6DDD2"
+    },
+    "text_color": {
+      "type": "string",
+      "description": "Cor do texto do badge (hex)",
+      "default": "#5C544A"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

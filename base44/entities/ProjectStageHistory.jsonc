@@ -1,0 +1,45 @@
+{
+  "name": "ProjectStageHistory",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "ID do projeto"
+    },
+    "pipeline_stage": {
+      "type": "string",
+      "enum": [
+        "novo_contato",
+        "agendado_orcamento_presencial",
+        "followup_fechamento",
+        "perdido",
+        "followup_orcamento",
+        "aguardando_sinal",
+        "agendado",
+        "revisao",
+        "pos_venda",
+        "concluido"
+      ],
+      "description": "Etapa do pipeline"
+    },
+    "session_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data da sess\u00e3o naquele momento"
+    },
+    "changed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Quando a mudan\u00e7a ocorreu"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es sobre a mudan\u00e7a"
+    }
+  },
+  "required": [
+    "project_id",
+    "pipeline_stage",
+    "changed_at"
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "name": "Project",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "ID do cliente vinculado"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Nome do cliente (para exibi\u00e7\u00e3o r\u00e1pida)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o da tatuagem"
+    },
+    "style": {
+      "type": "string",
+      "enum": [
+        "Fineline",
+        "Realismo / Preto e cinza",
+        "Cobertura",
+        "Reforma",
+        "Colorido",
+        "Maori / Tribal",
+        "Micro-realismo",
+        "Ornamental / Pontilhismo / Geom\u00e9trico",
+        "Old School / New School",
+        "Black Work"
+      ],
+      "description": "Estilo da tatuagem"
+    },
+    "total_value": {
+      "type": "number",
+      "description": "Valor total do projeto"
+    },
+    "deposit_value": {
+      "type": "number",
+      "description": "Valor do sinal"
+    },
+    "installments": {
+      "type": "number",
+      "description": "N\u00famero de parcelas (para cart\u00e3o com juros)"
+    },
+    "session_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e hora da sess\u00e3o agendada"
+    },
+    "session_duration_minutes": {
+      "type": "number",
+      "default": 120,
+      "description": "Dura\u00e7\u00e3o da sess\u00e3o em minutos"
+    },
+    "tattoo_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data real em que a tatuagem foi realizada"
+    },
+    "revision_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data prevista ou remarcada da revis\u00e3o"
+    },
+    "revision_datetime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e hora da revis\u00e3o"
+    },
+    "revision_duration_minutes": {
+      "type": "number",
+      "default": 60,
+      "description": "Dura\u00e7\u00e3o da revis\u00e3o em minutos"
+    },
+    "evaluation_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data da avalia\u00e7\u00e3o/or\u00e7amento presencial"
+    },
+    "closing_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do fechamento do neg\u00f3cio"
+    },
+    "payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do pagamento da tatuagem (para faturamento por compet\u00eancia)"
+    },
+    "post_sale_contact_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e hora do contato p\u00f3s-venda"
+    },
+    "attendance_status": {
+      "type": "string",
+      "enum": [
+        "pendente",
+        "compareceu",
+        "no_show"
+      ],
+      "default": "pendente",
+      "description": "Status de comparecimento na avalia\u00e7\u00e3o presencial"
+    },
+    "needs_retouch": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica se o projeto precisa de retoque"
+    },
+    "post_sale_status": {
+      "type": "string",
+      "enum": [
+        "pendente",
+        "feito"
+      ],
+      "default": "pendente",
+      "description": "Status do acompanhamento de p\u00f3s-venda"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "Pix",
+        "Dinheiro",
+        "Cart\u00e3o sem juros",
+        "Cart\u00e3o com juros",
+        "Outros"
+      ],
+      "description": "Forma de pagamento"
+    },
+    "pipeline_stage": {
+      "type": "string",
+      "enum": [
+        "novo_contato",
+        "agendado_orcamento_presencial",
+        "followup_fechamento",
+        "perdido",
+        "followup_orcamento",
+        "aguardando_sinal",
+        "agendado",
+        "revisao",
+        "pos_venda",
+        "concluido"
+      ],
+      "default": "novo_contato",
+      "description": "Etapa no pipeline"
+    },
+    "stage_updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data da \u00faltima atualiza\u00e7\u00e3o de etapa"
+    },
+    "reference_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URLs das imagens de refer\u00eancia"
+    },
+    "project_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URLs das imagens do projeto (desenhos, evolu\u00e7\u00e3o, finalizadas)"
+    },
+    "calendar_event_id": {
+      "type": "string",
+      "description": "ID do evento no Google Calendar"
+    },
+    "revisao_calendar_event_id": {
+      "type": "string",
+      "description": "ID do evento de revis\u00e3o no Google Calendar"
+    },
+    "pos_venda_calendar_event_id": {
+      "type": "string",
+      "description": "ID do evento de p\u00f3s-venda no Google Calendar"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es do projeto"
+    },
+    "deposit_confirmed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Se o sinal foi confirmado como recebido"
+    },
+    "deposit_confirmed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data/hora da confirma\u00e7\u00e3o do recebimento do sinal"
+    },
+    "deposit_confirmed_value": {
+      "type": "number",
+      "description": "Valor do sinal confirmado"
+    },
+    "deposit_confirmed_method": {
+      "type": "string",
+      "enum": [
+        "Pix",
+        "Dinheiro",
+        "Cart\u00e3o sem juros",
+        "Cart\u00e3o com juros",
+        "Outros"
+      ],
+      "description": "Forma de pagamento do sinal confirmada"
+    },
+    "total_value_confirmed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Se o valor total da tatuagem foi confirmado como recebido"
+    },
+    "total_value_confirmed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data/hora da confirma\u00e7\u00e3o do recebimento do valor total"
+    },
+    "total_value_confirmed_value": {
+      "type": "number",
+      "description": "Valor total confirmado"
+    },
+    "total_value_confirmed_method": {
+      "type": "string",
+      "enum": [
+        "Pix",
+        "Dinheiro",
+        "Cart\u00e3o sem juros",
+        "Cart\u00e3o com juros",
+        "Outros"
+      ],
+      "description": "Forma de pagamento do valor total confirmada"
+    },
+    "is_concluded": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica se o projeto foi conclu\u00eddo (todos os follow-ups de p\u00f3s-venda finalizados)"
+    },
+    "tattoo_payments": {
+      "type": "array",
+      "description": "Lista de recebimentos do valor da tatuagem, quando o cliente paga em v\u00e1rias formas e/ou datas",
+      "items": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Valor recebido nesta parcela"
+          },
+          "method": {
+            "type": "string",
+            "description": "Forma de pagamento usada nesta parcela"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Data em que este valor foi recebido"
+          }
+        }
+      }
+    },
+    "lost_reason": {
+      "type": "string",
+      "description": "Motivo pelo qual o projeto foi marcado como perdido (op\u00e7\u00e3o da lista fixa)"
+    },
+    "lost_reason_details": {
+      "type": "string",
+      "description": "Detalhes livres sobre o motivo da perda do projeto"
+    },
+    "lost_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data/hora em que o projeto foi marcado como perdido"
+    }
+  },
+  "required": [
+    "client_id",
+    "description"
+  ]
+}

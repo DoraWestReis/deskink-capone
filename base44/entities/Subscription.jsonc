@@ -1,0 +1,66 @@
+{
+  "name": "Subscription",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "ID do usu\u00e1rio que possui esta assinatura"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "annual",
+        "monthly",
+        "free"
+      ],
+      "description": "Tipo de plano"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de in\u00edcio da assinatura"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data final da assinatura"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "pending_renewal",
+        "expired",
+        "cancelled"
+      ],
+      "default": "active",
+      "description": "Status atual da assinatura"
+    },
+    "alert_stage": {
+      "type": "string",
+      "enum": [
+        "none",
+        "client_pre_due",
+        "dev_due",
+        "dev_post_7_days"
+      ],
+      "default": "none",
+      "description": "\u00daltimo est\u00e1gio de alerta disparado"
+    },
+    "last_payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do \u00faltimo pagamento confirmado"
+    },
+    "developer_notes": {
+      "type": "string",
+      "description": "Anota\u00e7\u00f5es internas"
+    }
+  },
+  "required": [
+    "client_id",
+    "type",
+    "start_date",
+    "end_date"
+  ]
+}

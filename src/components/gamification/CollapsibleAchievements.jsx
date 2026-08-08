@@ -1,0 +1,15 @@
+import React, { useState } from 'react';
+import { ChevronDown, Gift, Lock, RotateCcw, Trophy } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+
+export default function CollapsibleAchievements({ title, subtitle, achievements, unlocked, isAdmin }) {
+  const [open, setOpen] = useState(true);
+  const visible = achievements.filter((item) => (!item.adminOnly || isAdmin) && (!item.revealAfter || unlocked.includes(item.revealAfter)));
+  const HeaderIcon = title.startsWith('Conquistas') ? RotateCcw : Trophy;
+  return (
+    <section className="rounded-2xl border border-[#E7DED2] bg-[#FCF8F4] p-3">
+      <button type="button" onClick={() => setOpen(!open)} className="mb-3 flex w-full items-start justify-between text-left"><div><p className="flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-[#9C8A6D]"><HeaderIcon className="h-3.5 w-3.5" />{title}</p><p className="mt-1 text-[10px] text-[#A69B90]">{subtitle}</p></div><span className="flex items-center gap-2 text-[10px] text-[#9C8A6D]">{visible.filter((item) => unlocked.includes(item.id)).length}/{visible.length}<ChevronDown className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`} /></span></button>
+      {open && <TooltipProvider delayDuration={150}><div className="grid grid-cols-2 gap-2 lg:grid-cols-4">{visible.map((achievement) => { const done = unlocked.includes(achievement.id); const Icon = achievement.mystery ? Gift : done ? Trophy : Lock; return <Tooltip key={achievement.id}><TooltipTrigger asChild><button type="button" aria-label={`${achievement.label}: ${achievement.description}`} className={`flex min-h-10 items-center gap-2 rounded-xl border p-2 text-left transition ${achievement.mystery ? 'border-violet-200 bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700' : done ? 'border-[#E7C990] bg-[#F8EFD9] text-[#5D4728]' : 'border-[#E7DED2] bg-[#F3F0EC] text-[#756E67]'}`}><span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${achievement.mystery ? 'bg-violet-100' : done ? 'bg-[#C7A66B] text-white' : 'bg-[#E6DED2] text-[#A69B90]'}`}><Icon className={`h-3.5 w-3.5 ${achievement.mystery ? 'animate-pulse' : ''}`} /></span><span className="min-w-0 flex-1"><span className="block truncate text-[10px] font-semibold">{achievement.label}</span>{achievement.progressText && <span className="block truncate text-[8px] uppercase tracking-wider text-[#B08954]">{achievement.progressText}</span>}{achievement.mystery && <span className="block text-[8px] uppercase tracking-wider">Secreto</span>}</span><span className="shrink-0 text-[8px] text-[#B08954]">+100</span></button></TooltipTrigger><TooltipContent side="top" className="max-w-xs bg-[#231F20] px-3 py-2 text-center text-[10px] leading-relaxed text-[#FCF8F4]">{achievement.description}</TooltipContent></Tooltip>; })}</div></TooltipProvider>}
+    </section>
+  );
+}

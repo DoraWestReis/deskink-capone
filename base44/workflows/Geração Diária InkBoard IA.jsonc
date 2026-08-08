@@ -1,0 +1,41 @@
+{
+  "name": "Gera\u00e7\u00e3o Di\u00e1ria InkBoard IA",
+  "description": "Gera automaticamente uma sugest\u00e3o de IA no InkBoard. A fun\u00e7\u00e3o se auto-bloqueia caso j\u00e1 exista sugest\u00e3o nos \u00faltimos 15 dias.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 11 * * *",
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "gera_o_di_ria_inkboard_ia",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "generateInkBoardIdea",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  }
+}

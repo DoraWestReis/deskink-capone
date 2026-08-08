@@ -1,0 +1,58 @@
+{
+  "name": "FollowUpTask",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "ID do projeto vinculado"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Nome do cliente"
+    },
+    "follow_up_type": {
+      "type": "string",
+      "enum": [
+        "aguardando_sinal",
+        "followup_orcamento",
+        "followup_fechamento",
+        "pos_venda",
+        "revisao",
+        "session_reminder"
+      ],
+      "description": "Tipo de follow-up"
+    },
+    "step_number": {
+      "type": "number",
+      "description": "Ordem do contato dentro da sequ\u00eancia de follow-up"
+    },
+    "step_label": {
+      "type": "string",
+      "description": "Nome curto da etapa de contato"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data prevista para o follow-up"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "dismissed"
+      ],
+      "default": "pending",
+      "description": "Status do follow-up"
+    },
+    "message": {
+      "type": "string",
+      "description": "Mensagem de lembrete"
+    }
+  },
+  "required": [
+    "project_id",
+    "follow_up_type",
+    "due_date"
+  ]
+}

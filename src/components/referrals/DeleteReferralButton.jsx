@@ -1,0 +1,5 @@
+import React from 'react';
+import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+export default function DeleteReferralButton({ onDelete }) { return <AlertDialog><AlertDialogTrigger asChild><Button size="icon" variant="destructive" aria-label="Excluir indicação"><Trash2 /></Button></AlertDialogTrigger><AlertDialogContent className="rounded-2xl bg-[#FCF8F4]"><AlertDialogHeader><AlertDialogTitle>Excluir esta indicação?</AlertDialogTitle><AlertDialogDescription>Essa ação não poderá ser desfeita.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancelar</AlertDialogCancel><AlertDialogAction onClick={onDelete} className="bg-red-600 hover:bg-red-700">Excluir</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>; }

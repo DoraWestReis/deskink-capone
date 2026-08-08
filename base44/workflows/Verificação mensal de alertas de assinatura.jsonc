@@ -1,0 +1,41 @@
+{
+  "name": "Verifica\u00e7\u00e3o mensal de alertas de assinatura",
+  "description": "Verifica todas as assinaturas ativas no 1\u00ba dia de cada m\u00eas e envia alertas de vencimento por email",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 12 1 * *",
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "verifica_o_mensal_de_alertas_de_assinatura",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "manageSubscriptionAlerts",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  }
+}

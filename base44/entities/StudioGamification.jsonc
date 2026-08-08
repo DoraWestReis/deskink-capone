@@ -1,0 +1,93 @@
+{
+  "name": "StudioGamification",
+  "type": "object",
+  "properties": {
+    "current_streak": {
+      "type": "number",
+      "default": 0
+    },
+    "longest_streak": {
+      "type": "number",
+      "default": 0
+    },
+    "last_healthy_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "xp": {
+      "type": "number",
+      "default": 0
+    },
+    "monthly_xp": {
+      "type": "number",
+      "default": 0
+    },
+    "unlocked_achievements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "monthly_unlocked_achievements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "current_month_key": {
+      "type": "string"
+    },
+    "last_checked_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "weekly_goal_week_key": {
+      "type": "string"
+    },
+    "weekly_healthy_days": {
+      "type": "number",
+      "default": 0
+    },
+    "weekly_goal_completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "weekly_goals_completed_total": {
+      "type": "number",
+      "default": 0
+    },
+    "monthly_weekly_goals_completed": {
+      "type": "number",
+      "default": 0
+    },
+    "monthly_healthy_days": {
+      "type": "number",
+      "default": 0
+    },
+    "deskink_referrals_count": {
+      "type": "number",
+      "default": 0
+    },
+    "journey_started_at": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

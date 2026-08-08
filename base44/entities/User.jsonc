@@ -1,0 +1,82 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user"
+      ],
+      "default": "user",
+      "description": "Papel do usu\u00e1rio no app"
+    },
+    "plan_type": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "annual",
+        "free"
+      ],
+      "description": "Tipo de plano"
+    },
+    "plan_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "pending_renewal",
+        "expired",
+        "cancelled"
+      ],
+      "description": "Status do plano"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "not_applicable"
+      ],
+      "description": "Status do pagamento"
+    },
+    "plan_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "In\u00edcio do plano"
+    },
+    "plan_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Vencimento do plano"
+    },
+    "last_payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u00daltimo pagamento confirmado"
+    },
+    "plan_alert_stage": {
+      "type": "string",
+      "enum": [
+        "none",
+        "client_pre_due",
+        "dev_due",
+        "dev_post_7_days"
+      ],
+      "default": "none",
+      "description": "Est\u00e1gio do alerta do plano"
+    },
+    "developer_notes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es internas"
+    }
+  },
+  "required": [
+    "plan_type",
+    "plan_status",
+    "payment_status",
+    "plan_start_date",
+    "plan_end_date",
+    "last_payment_date",
+    "developer_notes"
+  ]
+}

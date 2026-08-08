@@ -1,0 +1,34 @@
+{
+  "name": "Atualizar follow-ups ao mudar etapa do projeto",
+  "description": "",
+  "trigger": {
+    "condition": "${ ((.trigger.changed_fields | index(\"pipeline_stage\") != null) or (.trigger.changed_fields | index(\"session_date\") != null) or (.trigger.changed_fields | index(\"tattoo_date\") != null) or (.trigger.changed_fields | index(\"revision_date\") != null) or (.trigger.changed_fields | index(\"revision_datetime\") != null) or (.trigger.changed_fields | index(\"evaluation_date\") != null) or (.trigger.changed_fields | index(\"closing_date\") != null) or (.trigger.changed_fields | index(\"stage_updated_at\") != null) or (.trigger.changed_fields | index(\"post_sale_contact_date\") != null) or (.trigger.changed_fields | index(\"post_sale_status\") != null)) }",
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "update"
+      ],
+      "entity_name": "Project"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "atualizar_follow_ups_ao_mudar_etapa_do_projeto",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "manageProjectFollowUps",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  }
+}

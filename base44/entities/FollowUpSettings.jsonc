@@ -1,0 +1,32 @@
+{
+  "name": "FollowUpSettings",
+  "type": "object",
+  "properties": {
+    "aguardando_sinal_days": {
+      "type": "number",
+      "default": 3,
+      "description": "Dias para follow-up em aguardando sinal"
+    },
+    "followup_orcamento_days": {
+      "type": "number",
+      "default": 3,
+      "description": "Dias para follow-up ap\u00f3s no-show da avalia\u00e7\u00e3o"
+    },
+    "followup_fechamento_days": {
+      "type": "number",
+      "default": 3,
+      "description": "Dias para follow-up de fechamento"
+    },
+    "pos_venda_days": {
+      "type": "number",
+      "default": 60,
+      "description": "Dias para p\u00f3s-venda ap\u00f3s a revis\u00e3o"
+    },
+    "revision_days": {
+      "type": "number",
+      "default": 20,
+      "description": "Dias para revis\u00e3o ap\u00f3s a sess\u00e3o"
+    }
+  },
+  "required": []
+}
