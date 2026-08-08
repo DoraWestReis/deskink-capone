@@ -343,6 +343,7 @@ export default function Home() {
     referralClosedThisMonth: referralProgress.current_month,
     deskinkReferralsCount: referralProgress.total,
     isAdmin: user?.role === 'admin',
+    hasActivity: clients.length > 0 || projects.length > 0,
   };
   const gamificationReady = Boolean(user) && projectsReady && clientsReady && settingsReady && tasksReady && referralsReady;
 
