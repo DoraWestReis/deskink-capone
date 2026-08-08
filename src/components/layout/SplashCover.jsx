@@ -22,12 +22,12 @@ export default function SplashCover() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          transition={{ duration: visible ? 0.7 : 0.6 }}
+          initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#080608] px-6"
           style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px)', backgroundSize: '22px 22px' }}
         >
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 8 }} transition={{ duration: 0.7 }} className="flex flex-col items-center text-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 8 }} transition={{ duration: 0.7, delay: 0.1 }} className="flex flex-col items-center text-center">
             <DeskInkLogo className="h-24 w-24 text-white" />
             <p className="mt-[72px] font-display text-[13px] leading-6 tracking-[-0.03em] text-white/55">
               EVOLUA SEU <span className="text-white">PROCESSO.</span><br />DOMINE SEUS <span className="text-white">RESULTADOS.</span>
