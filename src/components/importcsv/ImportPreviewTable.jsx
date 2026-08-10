@@ -40,6 +40,9 @@ export default function ImportPreviewTable({ groups }) {
                   {group.contact
                     ? <span className="text-[#231F20]">{group.contact}</span>
                     : <span className="rounded-full bg-amber-100 px-2 py-1 text-[11px] font-bold text-amber-700">SEM CONTATO</span>}
+                  {group.email && <div className="text-xs text-[#7A736C]">{group.email}</div>}
+                  {group.cpf && <div className="text-xs text-[#7A736C]">CPF {group.cpf}</div>}
+                  {group.birth_date && <div className="text-xs text-[#7A736C]">Nasc. {group.birth_date.split('-').reverse().join('/')}</div>}
                 </td>
               </tr>
             ))}

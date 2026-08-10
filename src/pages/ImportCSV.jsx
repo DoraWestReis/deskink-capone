@@ -5,7 +5,7 @@ import { Loader2, Upload } from 'lucide-react';
 import { parseCalendarRows } from '@/components/importcsv/parseCalendarRows';
 import ImportPreviewTable from '@/components/importcsv/ImportPreviewTable';
 
-const FILE_URL = 'https://media.base44.com/files/public/6a7722b41d819a5df67c6c12/59e77486c_agendamentos_boca_tattoo_completo.xlsx';
+const FILE_URL = 'https://media.base44.com/files/public/6a7722b41d819a5df67c6c12/e5b053260_agendamentos_boca_tattoo.xlsx';
 
 const SCHEMA = {
   type: 'array',

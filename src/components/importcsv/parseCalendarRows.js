@@ -1,3 +1,5 @@
+import { parseContactDetails } from './parseContactDetails';
+
 const SERVICE_WORDS = [
   'tattoo', 'tatuagem', 'tatoo', 'sessao', 'sessão', 'cobertura', 'reforma', 'retoque',
   'fineline', 'realismo', 'orcamento', 'orçamento', 'avaliacao', 'avaliação',
@@ -43,20 +45,38 @@ export function parseCalendarRows(rows, now = new Date()) {
       ? 120
       : Math.max(30, Math.round((end.getTime() - start.getTime()) / 60000));
 
-    const { name, description } = parseTitle(row.titulo);
-    const contact = extractContact(row.descricao_contato);
+    const parsed = parseTitle(row.titulo);
+    const details = parseContactDetails(row.descricao_contato);
+    const name = details.name || parsed.name;
+    const contact = details.whatsapp || extractContact(row.descricao_contato) || '';
     const key = strip(name);
 
-    if (!groups.has(key)) groups.set(key, { key, name, contact, sessions: [] });
+    if (!groups.has(key)) {
+      groups.set(key, {
+        key,
+        name,
+        contact,
+        cpf: details.cpf || '',
+        email: details.email || '',
+        birth_date: details.birth_date || '',
+        sessions: [],
+      });
+    }
     const group = groups.get(key);
     if (!group.contact && contact) group.contact = contact;
+    if (!group.cpf && details.cpf) group.cpf = details.cpf;
+    if (!group.email && details.email) group.email = details.email;
+    if (!group.birth_date && details.birth_date) group.birth_date = details.birth_date;
 
     group.sessions.push({
-      description,
+      description: parsed.description,
       session_date: start.toISOString(),
       session_duration_minutes: duration,
       pipeline_stage: start > now ? 'agendado' : 'concluido',
       notes: String(row.descricao_contato || '').trim() || undefined,
+      total_value: details.total_value ?? undefined,
+      deposit_value: details.deposit_value ?? undefined,
+      installments: details.installments ?? undefined,
       contact,
       title: row.titulo,
     });

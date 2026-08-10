@@ -27,11 +27,24 @@ export default async function (req) {
           client = await sr.entities.Client.create({
             name: group.name,
             whatsapp: group.contact || '',
+            email: group.email || undefined,
+            cpf: group.cpf || undefined,
+            birth_date: group.birth_date || undefined,
             registration_date: today,
             codigo_sequencial: nextSeq,
             notes: group.contact ? undefined : NO_CONTACT_NOTE,
           });
           clientsCreated += 1;
+        } else {
+          const patch = {};
+          if (!client.whatsapp && group.contact) patch.whatsapp = group.contact;
+          if (!client.email && group.email) patch.email = group.email;
+          if (!client.cpf && group.cpf) patch.cpf = group.cpf;
+          if (!client.birth_date && group.birth_date) patch.birth_date = group.birth_date;
+          if (Object.keys(patch).length) {
+            await sr.entities.Client.update(client.id, patch);
+            client = { ...client, ...patch };
+          }
         }
 
         for (const session of group.sessions || []) {
@@ -42,6 +55,9 @@ export default async function (req) {
             session_date: session.session_date,
             session_duration_minutes: session.session_duration_minutes || 120,
             pipeline_stage: session.pipeline_stage || 'agendado',
+            total_value: session.total_value ?? undefined,
+            deposit_value: session.deposit_value ?? undefined,
+            installments: session.installments ?? undefined,
             notes: session.notes || undefined,
           });
           projectsCreated += 1;
