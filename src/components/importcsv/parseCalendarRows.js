@@ -34,6 +34,16 @@ export function extractContact(text) {
   return match ? match[1].replace(/[^\d+]/g, '') : raw.slice(0, 120);
 }
 
+export function resolveStage(title, status, isFuture) {
+  const t = strip(title);
+  if (strip(status) === 'cancelled' || t.includes('cancelad')) return 'perdido';
+  if (t.includes('revisao') || t.includes('retoque')) return 'revisao';
+  if (t.includes('orcamento') || t.includes('avaliacao') || t.includes('consulta') || t.includes('video chamada') || t.includes('videochamada')) {
+    return isFuture ? 'agendado_orcamento_presencial' : 'followup_fechamento';
+  }
+  return isFuture ? 'agendado' : 'concluido';
+}
+
 export function parseCalendarRows(rows, now = new Date()) {
   const groups = new Map();
 
@@ -72,7 +82,7 @@ export function parseCalendarRows(rows, now = new Date()) {
       description: parsed.description,
       session_date: start.toISOString(),
       session_duration_minutes: duration,
-      pipeline_stage: start > now ? 'agendado' : 'concluido',
+      pipeline_stage: resolveStage(row.titulo, row.status, start > now),
       notes: String(row.descricao_contato || '').trim() || undefined,
       total_value: details.total_value ?? undefined,
       deposit_value: details.deposit_value ?? undefined,

@@ -5,6 +5,15 @@ import { Button } from '@/components/ui/button';
 
 const PAGE_SIZE = 15;
 
+const STAGE_LABELS = {
+  agendado: 'Agendado',
+  agendado_orcamento_presencial: 'Orçamento presencial',
+  followup_fechamento: 'Follow-up fechamento',
+  revisao: 'Revisão',
+  concluido: 'Concluído',
+  perdido: 'Perdido',
+};
+
 export default function ImportPreviewTable({ groups }) {
   const [page, setPage] = useState(0);
   const totalPages = Math.max(1, Math.ceil(groups.length / PAGE_SIZE));
@@ -32,7 +41,7 @@ export default function ImportPreviewTable({ groups }) {
                     <div key={i} className="whitespace-nowrap">
                       {format(new Date(session.session_date), "dd/MM/yy 'às' HH:mm", { locale: ptBR })}
                       {' · '}{session.session_duration_minutes}min · {session.description}
-                      {' · '}<span className={session.pipeline_stage === 'agendado' ? 'text-[#B89A66]' : 'text-emerald-600'}>{session.pipeline_stage}</span>
+                      {' · '}<span className={session.pipeline_stage === 'perdido' ? 'text-red-600' : session.pipeline_stage === 'concluido' ? 'text-emerald-600' : 'text-[#B89A66]'}>{STAGE_LABELS[session.pipeline_stage] || session.pipeline_stage}</span>
                     </div>
                   ))}
                 </td>
