@@ -59,18 +59,32 @@ export default function ImportCSV() {
     for (let i = 0; i < totalBatches; i++) {
       const batch = groups.slice(i * batchSize, (i + 1) * batchSize);
       addLog(`Enviando lote ${i + 1}/${totalBatches} (${batch.length} clientes)...`);
-      try {
-        const response = await base44.functions.invoke('importCalendarSessions', { groups: batch });
-        clients += response.data?.clients_created || 0;
-        projects += response.data?.projects_created || 0;
-        if (response.data?.errors?.length) errors.push(...response.data.errors);
-        addLog(`✅ Lote ${i + 1}: ${response.data?.clients_created} clientes, ${response.data?.projects_created} projetos`);
-      } catch (e) {
-        errors.push(`Lote ${i + 1}: ${e.message}`);
-        addLog(`❌ Lote ${i + 1} falhou: ${e.message}`);
+      let attempt = 0;
+      let done = false;
+      while (!done && attempt < 6) {
+        attempt += 1;
+        try {
+          const response = await base44.functions.invoke('importCalendarSessions', { groups: batch });
+          clients += response.data?.clients_created || 0;
+          projects += response.data?.projects_created || 0;
+          if (response.data?.errors?.length) errors.push(...response.data.errors);
+          addLog(`✅ Lote ${i + 1}: ${response.data?.clients_created} clientes, ${response.data?.projects_created} projetos`);
+          done = true;
+        } catch (e) {
+          const isRateLimit = e?.response?.status === 429 || String(e.message).includes('429');
+          if (isRateLimit && attempt < 6) {
+            const wait = 5000 * attempt;
+            addLog(`⏳ Limite de requisições no lote ${i + 1}. Nova tentativa em ${wait / 1000}s...`);
+            await new Promise((r) => setTimeout(r, wait));
+          } else {
+            errors.push(`Lote ${i + 1}: ${e.message}`);
+            addLog(`❌ Lote ${i + 1} falhou: ${e.message}`);
+            done = true;
+          }
+        }
       }
       setProgress({ sent: Math.min((i + 1) * batchSize, groups.length), total: groups.length });
-      if (i < totalBatches - 1) await new Promise((r) => setTimeout(r, 2000));
+      if (i < totalBatches - 1) await new Promise((r) => setTimeout(r, 4000));
     }
 
     addLog('--- CONCLUÍDO ---');
