@@ -378,7 +378,7 @@ export default function Home() {
             <PeriodMetricsBar profit={myProfit} revenue={grossRevenue} goal={selectedPeriodGoal} progress={goalProgress} onProfitClick={() => setSelectedDetail(profitDetail)} onRevenueClick={() => setSelectedDetail(revenueDetail)} />
           </CollapsibleSection>
 
-          <CollapsibleSection id="atencao" title="Precisa da sua atenção">
+          <CollapsibleSection id="atencao" label="Saúde do traço" title="Precisa da sua atenção">
             <PendingActionsPanel pendingEngine={pendingEngine} gamificationStats={gamificationStats} gamificationReady={gamificationReady} />
           </CollapsibleSection>
 
