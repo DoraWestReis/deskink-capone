@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Bot, Loader2, Minus, Plus, X } from 'lucide-react';
+import { Bot, Loader2, MessageCircle, Minus, Plus, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -906,6 +906,16 @@ export default function StudioFlowFloatingChat() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                <a
+                  href={base44.agents.getWhatsAppConnectURL(AGENT_NAME)}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Falar com o assistente no WhatsApp"
+                  className="flex h-9 items-center gap-1.5 rounded-2xl bg-[#25D366] px-3 text-[11px] font-semibold text-[#0B2E13] transition-opacity hover:opacity-90"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp
+                </a>
                 <Button
                   variant="ghost"
                   size="icon"
