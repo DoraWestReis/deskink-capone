@@ -331,7 +331,7 @@ export default function Home() {
     const date = toSalvadorTime(new Date(project.session_date));
     return !Number.isNaN(date.getTime()) && isToday(date);
   }).length;
-  const pendingEngine = buildPendingEngine(followUpTasksWithClientInfo, projectsWithClientInfo, now);
+  const pendingEngine = buildPendingEngine(followUpTasksWithClientInfo, projectsWithClientInfo, now, clients);
   const pendingCount = pendingEngine.length;
   const historicalClientLTV = clients.reduce((sum, client) => sum + (Number(client.total_spent_history) || 0), 0);
   const historicalProjectLTV = projects.reduce((sum, project) => sum + ((project.total_value_confirmed || ['pos_venda', 'concluido'].includes(project.pipeline_stage)) ? (Number(project.total_value_confirmed_value) || Number(project.total_value) || 0) : 0), 0);

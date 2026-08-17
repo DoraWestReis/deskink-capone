@@ -1,4 +1,4 @@
-export function buildPendingEngine(tasks = [], projects = [], now = new Date()) {
+export function buildPendingEngine(tasks = [], projects = [], now = new Date(), clients = []) {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const elapsedDays = (value) => {
     const date = value ? new Date(value) : null;
@@ -29,5 +29,18 @@ export function buildPendingEngine(tasks = [], projects = [], now = new Date()) 
     kind: 'follow_up',
     urgency: task.days > 3 ? 'high' : 'medium',
   }));
-  return [...sessions, ...staleLeads, ...followUps];
+  const todayKey = `${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const birthdays = clients
+    .filter((client) => typeof client.birth_date === 'string' && client.birth_date.slice(5, 10) === todayKey)
+    .map((client) => ({
+      engine_id: `birthday-${client.id}`,
+      client_id: client.id,
+      client_name: client.name,
+      client_whatsapp: client.whatsapp,
+      kind: 'birthday',
+      days: 0,
+      urgency: 'medium',
+    }));
+
+  return [...sessions, ...staleLeads, ...followUps, ...birthdays];
 }
