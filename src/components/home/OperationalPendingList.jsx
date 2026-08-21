@@ -4,7 +4,7 @@ import OperationalPendingItem from '@/components/home/OperationalPendingItem';
 
 const storageKey = 'deskink-operational-pendings-hidden';
 
-export default function OperationalPendingList({ items = [] }) {
+export default function OperationalPendingList({ items = [], onConcludeBirthday }) {
   const [hidden, setHidden] = useState(() => localStorage.getItem(storageKey) === '1');
   if (!items.length) return null;
 
@@ -24,7 +24,7 @@ export default function OperationalPendingList({ items = [] }) {
         <button type="button" onClick={toggleHidden} className="flex items-center gap-2 rounded-full px-2 py-1 text-[10px] font-semibold text-[#7A736C] hover:bg-[#F3E8D6]"><EyeOff className="h-3.5 w-3.5" />Ocultar seção</button>
       </div>
       {items.map((item) => (
-        <OperationalPendingItem key={item.engine_id || item.id} item={item} />
+        <OperationalPendingItem key={item.engine_id || item.id} item={item} onConcludeBirthday={onConcludeBirthday} />
       ))}
     </div>
   );

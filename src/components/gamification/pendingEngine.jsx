@@ -33,7 +33,7 @@ export function buildPendingEngine(tasks = [], projects = [], now = new Date(), 
   const birthdays = clients
     .filter((client) => typeof client.birth_date === 'string' && client.birth_date.slice(5, 10) === todayKey)
     .map((client) => ({
-      engine_id: `birthday-${client.id}`,
+      engine_id: `birthday-${client.id}-${today.getFullYear()}-${todayKey}`,
       client_id: client.id,
       client_name: client.name,
       client_whatsapp: client.whatsapp,

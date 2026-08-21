@@ -24,6 +24,7 @@ import { Calendar, DollarSign, Heart } from 'lucide-react';
 import { getCommissionRate } from '@/components/utils/commissionHelper';
 import { getProjectPaymentEntries } from '@/components/utils/paymentMetrics';
 import { buildPendingEngine } from '@/components/gamification/pendingEngine';
+import { loadDoneBirthdays, markBirthdayDone } from '@/components/home/birthdayDone';
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -31,6 +32,8 @@ export default function Home() {
   const [customStartDate, setCustomStartDate] = useState(null);
   const [customEndDate, setCustomEndDate] = useState(null);
   const [selectedDetail, setSelectedDetail] = useState(null);
+  const [doneBirthdays, setDoneBirthdays] = useState(() => loadDoneBirthdays());
+  const concludeBirthday = (id) => setDoneBirthdays(markBirthdayDone(id));
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
@@ -331,7 +334,8 @@ export default function Home() {
     const date = toSalvadorTime(new Date(project.session_date));
     return !Number.isNaN(date.getTime()) && isToday(date);
   }).length;
-  const pendingEngine = buildPendingEngine(followUpTasksWithClientInfo, projectsWithClientInfo, now, clients);
+  const pendingEngine = buildPendingEngine(followUpTasksWithClientInfo, projectsWithClientInfo, now, clients)
+    .filter((item) => !(item.kind === 'birthday' && doneBirthdays.includes(item.engine_id)));
   const pendingCount = pendingEngine.length;
   const historicalClientLTV = clients.reduce((sum, client) => sum + (Number(client.total_spent_history) || 0), 0);
   const historicalProjectLTV = projects.reduce((sum, project) => sum + ((project.total_value_confirmed || ['pos_venda', 'concluido'].includes(project.pipeline_stage)) ? (Number(project.total_value_confirmed_value) || Number(project.total_value) || 0) : 0), 0);
@@ -379,7 +383,7 @@ export default function Home() {
           </CollapsibleSection>
 
           <CollapsibleSection id="atencao" label="Saúde do traço" title="Precisa da sua atenção">
-            <PendingActionsPanel pendingEngine={pendingEngine} gamificationStats={gamificationStats} gamificationReady={gamificationReady} />
+            <PendingActionsPanel pendingEngine={pendingEngine} gamificationStats={gamificationStats} gamificationReady={gamificationReady} onConcludeBirthday={concludeBirthday} />
           </CollapsibleSection>
 
           <CollapsibleSection id="tarefas-agenda" label="Agenda do dia" title="Tarefas e aniversários">
