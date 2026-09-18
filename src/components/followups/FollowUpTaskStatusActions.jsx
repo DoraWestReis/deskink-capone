@@ -153,6 +153,10 @@ export default function FollowUpTaskStatusActions({ task, projectId, clientName,
       queryClient.invalidateQueries({ queryKey: ['project-follow-up-tasks', projectIdValue] });
       queryClient.invalidateQueries({ queryKey: ['projects'] });
 
+      if (status === 'completed') {
+        toast({ title: 'Tarefa concluída', description: 'O contato foi marcado como resolvido.' });
+      }
+
       // After completing a pos_venda task, check if project can be concluded
       if (status === 'completed' && normalizedTask?.follow_up_type === 'pos_venda') {
         checkAndPromptConclusion();
@@ -229,7 +233,9 @@ export default function FollowUpTaskStatusActions({ task, projectId, clientName,
     onError: showActionError,
   });
 
-  const handleCompleteClick = () => {
+  const handleCompleteClick = (event) => {
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
     if (isFinalCycleStep) {
       setIsCycleDialogOpen(true);
       return;
@@ -252,7 +258,7 @@ export default function FollowUpTaskStatusActions({ task, projectId, clientName,
           aria-label="Marcar como resolvido"
           disabled={updateTaskMutation.isPending || rescheduleTaskMutation.isPending || cycleDecisionMutation.isPending}
           onClick={handleCompleteClick}
-          className="flex h-7 w-7 items-center justify-center rounded-full text-[#18B663] transition-colors hover:bg-[#EAF8F0] disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex h-9 w-9 touch-manipulation items-center justify-center rounded-full text-[#18B663] transition-colors hover:bg-[#EAF8F0] disabled:cursor-not-allowed disabled:opacity-60"
         >
           <CheckCircle2 className="h-4 w-4" strokeWidth={2.2} />
         </button>
@@ -261,11 +267,13 @@ export default function FollowUpTaskStatusActions({ task, projectId, clientName,
           title="Reagendar follow-up"
           aria-label="Reagendar follow-up"
           disabled={updateTaskMutation.isPending || rescheduleTaskMutation.isPending}
-          onClick={() => {
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
             setDialogMode('reschedule');
             setIsDialogOpen(true);
           }}
-          className="flex h-7 w-7 items-center justify-center rounded-full text-[#B08954] transition-colors hover:bg-[#F4EEE7] disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex h-9 w-9 touch-manipulation items-center justify-center rounded-full text-[#B08954] transition-colors hover:bg-[#F4EEE7] disabled:cursor-not-allowed disabled:opacity-60"
         >
           <RotateCcw className="h-4 w-4" strokeWidth={2} />
         </button>
@@ -275,12 +283,14 @@ export default function FollowUpTaskStatusActions({ task, projectId, clientName,
             title={isGoogleCalendarDisabled ? "Google Agenda indisponível no Pós-Venda" : "Agendar no Google Agenda"}
             aria-label={isGoogleCalendarDisabled ? "Google Agenda indisponível no Pós-Venda" : "Agendar no Google Agenda"}
             disabled={isGoogleCalendarDisabled}
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
               if (isGoogleCalendarDisabled) return;
               setDialogMode('calendar');
               setIsDialogOpen(true);
             }}
-            className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors ${isGoogleCalendarDisabled ? 'cursor-not-allowed text-[#B8B1A8] bg-[#F3EEE8]' : 'text-[#2B9AF3] hover:bg-[#EEF7FF]'}`}
+            className={`flex h-9 w-9 touch-manipulation items-center justify-center rounded-full transition-colors ${isGoogleCalendarDisabled ? 'cursor-not-allowed text-[#B8B1A8] bg-[#F3EEE8]' : 'text-[#2B9AF3] hover:bg-[#EEF7FF]'}`}
           >
             <CalendarDays className="h-4 w-4" />
           </button>
@@ -290,8 +300,12 @@ export default function FollowUpTaskStatusActions({ task, projectId, clientName,
           title="Retirar da lista"
           aria-label="Retirar da lista"
           disabled={updateTaskMutation.isPending || rescheduleTaskMutation.isPending}
-          onClick={() => updateTaskMutation.mutate('dismissed')}
-          className="flex h-7 w-7 items-center justify-center rounded-full text-[#9A9188] transition-colors hover:bg-[#F4EEE7] hover:text-[#7F766E] disabled:cursor-not-allowed disabled:opacity-60"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            updateTaskMutation.mutate('dismissed');
+          }}
+          className="flex h-9 w-9 touch-manipulation items-center justify-center rounded-full text-[#9A9188] transition-colors hover:bg-[#F4EEE7] hover:text-[#7F766E] disabled:cursor-not-allowed disabled:opacity-60"
         >
           <X className="h-4 w-4" strokeWidth={2} />
         </button>

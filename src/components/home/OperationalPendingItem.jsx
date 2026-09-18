@@ -39,7 +39,7 @@ export default function OperationalPendingItem({ item, onConcludeBirthday }) {
             : <Link to={`/ClientDetails?id=${item.client_id}`} className="rounded-full border border-[#E7DED2] bg-white px-3 py-2 text-[9px] font-semibold text-[#3A3431]">Abrir cliente</Link>
         ) : isLead && phone ? <a href={`https://wa.me/${phone}`} target="_blank" rel="noreferrer" className="rounded-full bg-[#231F20] px-3 py-2 text-[9px] font-semibold text-white">WhatsApp</a> : <Link to={`/ProjectDetails?id=${item.project_id}`} className="rounded-full border border-[#E7DED2] bg-white px-3 py-2 text-[9px] font-semibold text-[#3A3431]">Abrir projeto</Link>}
         {isBirthday && (
-          <button type="button" onClick={() => onConcludeBirthday?.(id)} title="Concluir pendência" aria-label="Concluir pendência" className="flex h-8 w-8 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-600 hover:bg-emerald-100"><Check className="h-3.5 w-3.5" /></button>
+          <button type="button" onClick={(event) => { event.preventDefault(); event.stopPropagation(); onConcludeBirthday?.(id); }} title="Concluir pendência" aria-label="Concluir pendência" className="flex h-9 w-9 touch-manipulation items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-600 hover:bg-emerald-100"><Check className="h-3.5 w-3.5" /></button>
         )}
         <button type="button" onClick={hide} title="Ocultar pendência" aria-label="Ocultar pendência" className="flex h-8 w-8 items-center justify-center rounded-full border border-[#E7DED2] bg-white text-[#8B837B] hover:text-[#3A3431]"><EyeOff className="h-3.5 w-3.5" /></button>
       </div>

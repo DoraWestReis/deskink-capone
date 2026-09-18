@@ -228,10 +228,14 @@ export default function FollowUpTasks({ tasks = [], periodStart = null, periodEn
                 <div className="flex shrink-0 items-center self-start">
                   <button
                     type="button"
-                    onClick={() => completeNoteMutation.mutate(note)}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      completeNoteMutation.mutate(note);
+                    }}
                     disabled={completeNoteMutation.isPending}
                     title="Concluir tarefa"
-                    className="flex h-9 w-9 items-center justify-center rounded-full text-[#2F8A6E] transition-colors hover:bg-[#E8F3EE] disabled:opacity-40"
+                    className="flex h-9 w-9 touch-manipulation items-center justify-center rounded-full text-[#2F8A6E] transition-colors hover:bg-[#E8F3EE] disabled:opacity-40"
                   >
                     <Check className="h-4 w-4" />
                   </button>
