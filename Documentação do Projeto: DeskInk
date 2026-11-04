@@ -1,0 +1,60 @@
+. Escopo e Visão Geral da SoluçãoProblema: Gestão descentralizada de agendamentos, orçamentos,
+finanças e cobranças de sinal em estúdios de tatuagem e artistas independentes, gerando altas taxas de absenteísmo e perda de tempo operacional.Solução: 
+Plataforma SaaS de gestão de estúdios (DeskInk) integrada com painel web e automação via WhatsApp. A plataforma gerencia clientes, serviços, fluxo de caixa, 
+assinaturas e automações de lembretes/alertas de pagamento de sinal.
+
+Melhorias Aplicadas (Ciclo Kaizen):Refatoração da arquitetura web com rotas protegidas por isolamento de estúdio 
+(StudioGuard e StudioProvider).
+
+Implementação de painel de controle administrativo (AdminConsole), logs de auditoria (AdminAuditLog) e rotinas de migração segura.
+
+Separação estrita entre rotas públicas (/, /Termos, /Privacidade, /Assinar, /TesteGratis) e rotas autenticadas da aplicação.
+
+2. Modelagem UML
+Diagrama de Classes (Camada de Domínio / Backend)
+Plaintext
++-----------------------+        +-----------------------+
+|        Studio         | 1    * |         User          |
++-----------------------+--------+-----------------------+
+| - id: UUID            |        | - id: UUID            |
+| - name: String        |        | - studio_id: UUID     |
+| - plan: String        |        | - name: String        |
+| - active: Boolean     |        | - email: String       |
++-----------------------+        | - role: String        |
+                                 +-----------------------+
+                                             | 1
+                                             | *
++-----------------------+        +-----------------------+
+|    Appointment        | *    1 |        Client         |
++-----------------------+--------+-----------------------+
+| - id: UUID            |        | - id: UUID            |
+| - studio_id: UUID     |        | - studio_id: UUID     |
+| - client_id: UUID     |        | - name: String        |
+| - date_time: DateTime |        | - phone: String       |
+| - deposit_fee: Float  |        | - notes: Text         |
+| - status: String      |        +-----------------------+
++-----------------------+
+Diagrama de Sequência: 
+Autenticação e Bootstrap de EstúdioPlaintext[Usuário] -> [App Router]: Acessa rota interna (ex: /studio-financials)
+[App Router] -> [StudioGuard]: Valida estado de autenticação e contexto
+[StudioGuard] -> [AuthContext]: Verifica JWT e registro de estúdio
+alt Usuário Autenticado e Registrado
+    [AuthContext] --> [StudioGuard]: Retorna permissões do estúdio
+    [StudioGuard] -> [LayoutWrapper]: Renderiza layout com StudioProvider
+    [LayoutWrapper] --> [Usuário]: Exibe tela do sistema
+else Usuário Não Registrado
+    [AuthContext] --> [StudioGuard]: Retorna erro 'user_not_registered'
+    [StudioGuard] --> [Usuário]: Renderiza componente <UserNotRegisteredError />
+end
+
+3. Projeto de Banco de Dados e Dicionário de Dados
+Dicionário de DadosTabela: studiosCampoTipoRestriçõesDescriçãoidUUIDPRIMARY KEY, NOT NULLIdentificador único do estúdio.nameVARCHAR(150)NOT NULLNome comercial
+do estúdio.plan_typeVARCHAR(50)DEFAULT 'free'Plano de assinatura ativo.created_atTIMESTAMPDEFAULT CURRENT_TIMESTAMPData de 
+cadastro no sistema.Tabela: clientsCampoTipoRestriçõesDescriçãoidUUIDPRIMARY KEY, NOT NULLIdentificador 
+único do cliente.studio_idUUIDFOREIGN 
+KEY -> studios(id)Chave estrangeira para garantia de multi-tenancy.nameVARCHAR(150)NOT NULLNome completo do cliente.phoneVARCHAR(20)NOT NULLTelefone/WhatsApp para notificações ativas.Tabela: appointmentsCampoTipoRestriçõesDescriçãoidUUIDPRIMARY KEY, NOT NULLIdentificador do agendamento/orçamento.studio_idUUIDFOREIGN KEY -> studios(id)Isolamento multi-inquilino.client_idUUIDFOREIGN KEY -> clients(id)Vínculo com o cliente final.amountDECIMAL(10,2)NOT NULLValor total do serviço contratado.deposit_statusVARCHAR(30)DEFAULT 'pending'Status da cobrança de sinal.4. Interface Humano-Computador (IHC / UX)Diretrizes de Layout e Tipografia:Uso de hierarquia clara de tipografia e paleta visual estruturada com tons escuros elegantes, refletindo o ecossistema profissional de estúdios.
+
+Componentes de Feedback e Controle:Tratamento de estados de carregamento global via <PageSpinner/>.Captura genérica de falhas de renderização via <AppErrorBoundary/>.Notificações flutuantes de feedback imediato através do componente <Toaster/>.Sinalização ativa de impersonação para administradores com <ImpersonationBanner/>.Estrutura de Diretórios Recomendada no GitPlaintext/deskink-repository
+
+
+└── README.md
